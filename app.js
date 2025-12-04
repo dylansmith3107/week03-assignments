@@ -6,8 +6,8 @@ let stats = {
   cps: 0,
 };
 
-const stringifiedPreferences = JSON.stringify(stats);
-localStorage.setItem("stats", stringifiedPreferences);
+const stringifiedStats = JSON.stringify(stats);
+localStorage.setItem("stats", stringifiedStats);
 
 //=======================================================
 //Shop upgrades
@@ -20,7 +20,6 @@ async function getShopApi() {
   console.log(data);
   return data;
 }
-//getShopApi();
 
 const shopContainer = document.getElementById("shop-container");
 
@@ -38,6 +37,13 @@ function createShop(shopData) {
     const cpsIncrease = document.createElement("p");
     cpsIncrease.textContent = shopData[i].increase;
     div.appendChild(cpsIncrease);
+    const purchaseBtn = document.createElement("button");
+    purchaseBtn.textContent = "Purchase";
+    purchaseBtn.className = "purchase-btn";
+    div.appendChild(purchaseBtn);
+    purchaseBtn.addEventListener("click", function () {
+      purchaseUpgrade(i, shopData);
+    });
   }
 }
 
@@ -46,4 +52,15 @@ async function renderShop() {
   createShop(shopApi);
 }
 
+function purchaseUpgrade(iValue, shopData) {
+  stats.totalCookieCount = stats.totalCookieCount - shopData[iValue].cost;
+  stats.cps = stats.cps + shopData[iValue].increase;
+  localStorage.setItem("stats", stringifiedStats);
+}
+
 renderShop();
+
+setInterval(function () {
+  stats.totalCookieCount += stats.cps;
+  localStorage.setItem("stats", stringifiedStats);
+}, 1000);
