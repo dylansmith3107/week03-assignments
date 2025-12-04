@@ -7,3 +7,8 @@
 body {
   background-color: lavender;
 }
+
+#cookie-img {
+  width: 300px;
+  height: auto;
+}
