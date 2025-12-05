@@ -12,3 +12,7 @@ body {
   width: 300px;
   height: auto;
 }
+
+.not-enough-cookies {
+  display: none;
+}
