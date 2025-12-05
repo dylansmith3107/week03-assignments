@@ -1,13 +1,10 @@
 //=======================================================
 //Local Storage
 
-let stats = {
-  totalCookieCount: 0,
+let stats = JSON.parse(localStorage.getItem("stats")) || {
+  cookies: 0,
   cps: 0,
 };
-
-const stringifiedStats = JSON.stringify(stats);
-localStorage.setItem("stats", stringifiedStats);
 
 const cookieStats = document.getElementById("cookie-stats");
 
@@ -18,6 +15,24 @@ cookieStats.appendChild(cookieCountText);
 const cpsText = document.createElement("h3");
 cpsText.textContent = `Cookies per second (cps): ${stats.cps}`;
 cookieStats.appendChild(cpsText);
+
+setInterval(function () {
+  stats.totalCookieCount = stats.totalCookieCount + stats.cps;
+  localStorage.setItem("stats", JSON.stringify(stats));
+  cookieCountText.textContent = `Cookie count: ${stats.totalCookieCount}`;
+  cpsText.textContent = `Cookies per second (cps): ${stats.cps}`;
+}, 1000);
+
+//=======================================================
+//Clickable cookie
+
+const cookieImg = document.getElementById("cookie-img");
+
+cookieImg.addEventListener("click", function () {
+  stats.totalCookieCount = stats.totalCookieCount + 1;
+  cookieCountText.textContent = `Cookie count: ${stats.totalCookieCount}`;
+  localStorage.setItem("stats", JSON.stringify(stats));
+});
 
 //=======================================================
 //Shop upgrades
@@ -38,40 +53,49 @@ function createShop(shopData) {
     const div = document.createElement("div");
     div.className = "shop-div";
     shopContainer.appendChild(div);
+
     const upgradeName = document.createElement("h3");
     upgradeName.textContent = shopData[i].name;
     div.appendChild(upgradeName);
+
     const upgradeCost = document.createElement("p");
     upgradeCost.textContent = `Cost: ${shopData[i].cost}`;
     div.appendChild(upgradeCost);
+    if (stats.totalCookieCount >= shopData[i].cost) {
+      upgradeCost.style.color = "green";
+    } else {
+      upgradeCost.style.color = "red";
+      div.style.backgroundColor = "gray";
+    }
+
     const cpsIncrease = document.createElement("p");
     cpsIncrease.textContent = `Increase: ${shopData[i].increase} CPS`;
     div.appendChild(cpsIncrease);
+
     const purchaseBtn = document.createElement("button");
     purchaseBtn.textContent = "Purchase";
     purchaseBtn.className = "purchase-btn";
     div.appendChild(purchaseBtn);
+
     const notEnoughCookies = document.createElement("p");
     notEnoughCookies.textContent =
       "You do not have enough cookies to purchase this upgrade";
     notEnoughCookies.className = "not-enough-cookies";
     div.appendChild(notEnoughCookies);
+
     purchaseBtn.addEventListener("click", function () {
       purchaseUpgrade(i, shopData, notEnoughCookies);
     });
   }
 }
 
-async function renderShop() {
-  const shopApi = await getShopApi();
-  createShop(shopApi);
-}
-
 function purchaseUpgrade(iValue, shopData, notEnoughCookies) {
   if (stats.totalCookieCount >= shopData[iValue].cost) {
     stats.totalCookieCount = stats.totalCookieCount - shopData[iValue].cost;
     stats.cps = stats.cps + shopData[iValue].increase;
-    localStorage.setItem("stats", stringifiedStats);
+    cookieCountText.textContent = `Cookie count: ${stats.totalCookieCount}`;
+    cpsText.textContent = `Cookies per second (cps): ${stats.cps}`;
+    localStorage.setItem("stats", JSON.stringify(stats));
   } else {
     notEnoughCookies.style.display = "flex";
     setTimeout(function () {
@@ -80,9 +104,9 @@ function purchaseUpgrade(iValue, shopData, notEnoughCookies) {
   }
 }
 
-renderShop();
+async function renderShop() {
+  const shopApi = await getShopApi();
+  createShop(shopApi);
+}
 
-setInterval(function () {
-  stats.totalCookieCount += stats.cps;
-  localStorage.setItem("stats", stringifiedStats);
-}, 1000);
+renderShop();

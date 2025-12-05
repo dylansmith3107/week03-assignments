@@ -6,11 +6,77 @@
 
 body {
   background-color: lavender;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 8% 100%;
+}
+
+h1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  text-align: center;
+  align-content: center;
+  border-bottom: solid 2px black;
+}
+
+body {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  max-height: 100vh;
+}
+
+#cookie-container {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  padding-top: 0.25rem;
+  border-right: solid 1.5px black;
+  display: flex;
+  flex-direction: column;
+}
+
+#shop-container {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  max-height: 100vh;
+  overflow: auto;
+  padding-top: 0.25rem;
+  border-left: solid 1.5px black;
+}
+
+#cookie-stats {
+  text-align: center;
 }
 
 #cookie-img {
+  display: flex;
   width: 300px;
   height: auto;
+  cursor: pointer;
+}
+
+#shop-container h2 {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.shop-div {
+  padding: 1rem;
+  border-top: solid 2px black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.purchase-btn {
+  cursor: pointer;
 }
 
 .not-enough-cookies {
