@@ -16,11 +16,15 @@ const cpsText = document.createElement("h3");
 cpsText.textContent = `Cookies per second (cps): ${stats.cps}`;
 cookieStats.appendChild(cpsText);
 
+const title = document.querySelector("title");
+title.textContent = `${stats.totalCookieCount} - Cookie Clicker`;
+
 setInterval(function () {
   stats.totalCookieCount = stats.totalCookieCount + stats.cps;
   localStorage.setItem("stats", JSON.stringify(stats));
   cookieCountText.textContent = `Cookie count: ${stats.totalCookieCount}`;
   cpsText.textContent = `Cookies per second (cps): ${stats.cps}`;
+  title.textContent = `${stats.totalCookieCount} - Cookie Clicker`;
 }, 1000);
 
 //=======================================================
@@ -31,6 +35,7 @@ const cookieImg = document.getElementById("cookie-img");
 cookieImg.addEventListener("click", function () {
   stats.totalCookieCount = stats.totalCookieCount + 1;
   cookieCountText.textContent = `Cookie count: ${stats.totalCookieCount}`;
+  title.textContent = `${stats.totalCookieCount} - Cookie Clicker`;
   localStorage.setItem("stats", JSON.stringify(stats));
 });
 
@@ -95,6 +100,7 @@ function purchaseUpgrade(iValue, shopData, notEnoughCookies) {
     stats.cps = stats.cps + shopData[iValue].increase;
     cookieCountText.textContent = `Cookie count: ${stats.totalCookieCount}`;
     cpsText.textContent = `Cookies per second (cps): ${stats.cps}`;
+    title.textContent = `${stats.totalCookieCount} - Cookie Clicker`;
     localStorage.setItem("stats", JSON.stringify(stats));
   } else {
     notEnoughCookies.style.display = "flex";
