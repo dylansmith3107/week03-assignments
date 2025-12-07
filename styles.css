@@ -5,22 +5,52 @@
 }
 
 body {
-  background-color: lavender;
+  background-color: lightgoldenrodyellow;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 8% 100%;
+  font-family: monospace;
 }
 
-h1 {
+.title-logo {
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
   justify-content: center;
-  align-content: center;
   border-bottom: solid 2px black;
   display: flex;
   flex-wrap: wrap;
+  background-color: saddlebrown;
+}
+
+h1 {
+  align-content: center;
+  color: gold;
+  font-weight: bold;
+}
+
+.cookie-logo {
+  width: 40px;
+  height: auto;
+  display: flex;
+}
+
+.upgrade-logo {
+  width: 40px;
+  height: auto;
+  display: flex;
+}
+
+#shop-container {
+  background-color: lightsteelblue;
+}
+
+.upgrade-title {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 body {
@@ -76,14 +106,27 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  background-color: darkgrey;
 }
 
 .purchase-btn {
   cursor: pointer;
+  width: 80px;
+  height: 25px;
+  font-family: monospace;
+  background-color: green;
+  color: white;
+}
+
+.purchase-btn:hover {
+  background-color: white;
+  color: green;
 }
 
 .not-enough-cookies {
   display: none;
+  color: crimson;
+  font-weight: bold;
 }
 
 @media (max-width: 600px) {
@@ -93,5 +136,11 @@ body {
     height: auto;
     cursor: pointer;
     align-self: center;
+  }
+
+  .cookie-logo {
+    width: 60px;
+    height: auto;
+    display: flex;
   }
 }

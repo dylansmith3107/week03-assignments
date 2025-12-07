@@ -2,7 +2,7 @@
 //Local Storage
 
 let stats = JSON.parse(localStorage.getItem("stats")) || {
-  cookies: 0,
+  totalCookieCount: 0,
   cps: 0,
 };
 
@@ -66,12 +66,6 @@ function createShop(shopData) {
     const upgradeCost = document.createElement("p");
     upgradeCost.textContent = `Cost: ${shopData[i].cost}`;
     div.appendChild(upgradeCost);
-    if (stats.totalCookieCount >= shopData[i].cost) {
-      upgradeCost.style.color = "green";
-    } else {
-      upgradeCost.style.color = "red";
-      div.style.backgroundColor = "gray";
-    }
 
     const cpsIncrease = document.createElement("p");
     cpsIncrease.textContent = `Increase: ${shopData[i].increase} CPS`;
